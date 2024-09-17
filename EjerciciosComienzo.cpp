@@ -19,7 +19,7 @@ void simplificar(int n, int d) {
 	}
 }
 
-int ocurrencias123Repetidos(int* vector, int largo) { //Se entiende que utilizando una variable estado el algoritmo sería mas corto.
+int ocurrencias123Repetidos(int* vector, int largo) { //Se entiende que utilizando una variable estado el algoritmo serÃ­a mas corto.
 	int cantidadOcurrencias = 0;
 	bool uno = false;
 	bool dos = false;
@@ -220,10 +220,44 @@ unsigned int ocurrenciasSubstring(char **vecStr, int largoVecStr, char *substr)
     return 0;
 }
 
+int compararCadenas(const char* str1, const char* str2) {
+	int i = 0;
+	while (str1[i] != '\0' && str2[i] != '\0') {
+		if (str1[i] != str2[i]) {
+			return str1[i] - str2[i]; 
+		}
+		i++;
+	}
+	return str1[i] - str2[i];
+}
+
+char** copiarCharV2(char** aCopiar, int largoV) {
+	char** copiado = new char* [largoV]; // Crear arreglo de punteros
+
+	for (int i = 0; i < largoV; i++) {
+		int longitudCadena = largoVector(aCopiar[i]);
+		copiado[i] = new char[longitudCadena + 1];    
+		copiado[i]=copiarChar(aCopiar[i]);           
+	}
+
+	return copiado;
+}
+
 char **ordenarVecStrings(char **vecStr, int largoVecStr)
 {
-	// IMPLEMENTAR SOLUCION
-    return NULL;
+	char** retorno = copiarCharV2(vecStr, largoVecStr);
+
+	for (int i = 0; i < largoVecStr - 1; i++) {
+		for (int j = largoVecStr - 1; j > i; j--) {
+			if (compararCadenas(retorno[j - 1], retorno[j]) > 0) {
+				char* temp = retorno[j - 1];
+				retorno[j - 1] = retorno[j];
+				retorno[j] = temp;
+			}
+		}
+	}
+
+	return retorno;
 }
 
 char** splitStr(char* str, char separador, int &largoRet)
